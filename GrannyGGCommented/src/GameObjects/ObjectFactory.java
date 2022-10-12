@@ -2,6 +2,7 @@ package GameObjects;
 
 public class ObjectFactory {
 
+
     public ObjectFactory(){
 
     }
@@ -10,18 +11,18 @@ public class ObjectFactory {
        return new Guga(x, y);
     }
 
-    public GameObjects spawnObjects(){    //Appears to be all good, for now
-        double CCToObstRatio = 0.40;
-        double jokesRatio = 0.70;
-        double randomSpawn = Math.random();
-        if(randomSpawn > CCToObstRatio){
-            return new Obstacles();
-        }
-        if(randomSpawn > jokesRatio){
-            return new Jokes();
-        }
-        return new CodeCadet();
-    }
+    public GameObjects spawnObjects(double x, double y){
 
+            double CCToObstRatio = 0.40;
+            double jokesRatio = 0.70;
+            double randomSpawn = Math.random();
+            if (randomSpawn > CCToObstRatio) {
+                return new Obstacles(x, y);
+            }
+            if (randomSpawn > jokesRatio) {
+                return new Jokes();
+            }
+            return new CodeCadet(x,y);
+        }
 
 }

@@ -17,12 +17,12 @@ public class Map {
     private int rows = 80;
     private int cols = 150;
     public final static int cellSize = 10;
-    private int height;
-    private int width;
-    private int middleY = height/2;
+    private double height;
+    private double width;
+    private double middleY = height/2;
     private double y = Padding;
     private double x = Padding;
-    private int middleX = width/2;
+    private double middleX = width/2;
     private StartGame startGame;
     private Level1 level1;
     private Level2 level2;
@@ -36,7 +36,6 @@ public class Map {
         this.level1 = new Level1(this);         //Note that Guga should only appear after the startGame screen
         //this.level2 = new Level2(this);
         //this.startGame = new StartGame(this);
-
     }
 
     public StartGame getStartGame() {
@@ -55,11 +54,11 @@ public class Map {
         return y;
     }
 
-    public int getWidth() {
+    public double getWidth() {
         return width;
     }
 
-    public int getHeight() {
+    public double getHeight() {
         return height;
     }
 
@@ -67,11 +66,11 @@ public class Map {
         return x;
     }
 
-    public int getMiddleX() {
+    public double getMiddleX() {
         return middleX;
     }
 
-    public int getMiddleY() {
+    public double getMiddleY() {
         return middleY;
     }
 }

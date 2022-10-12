@@ -2,9 +2,9 @@ package Game;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
 
-        Engine engine = new Engine(200);
+        Engine engine = new Engine(250);
         engine.startGame();
 
     }

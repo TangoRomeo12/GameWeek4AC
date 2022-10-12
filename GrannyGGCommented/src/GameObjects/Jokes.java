@@ -30,7 +30,6 @@ public class Jokes extends GameObjects {
         //if getpositiionX >= 0 position =<0 (n\ao pode andar mais para a esquerda)
         //else isto :
         jokes.translate(-Map.cellSize, 0);
-
-
     }
+
 }

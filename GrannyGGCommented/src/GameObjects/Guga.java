@@ -11,34 +11,42 @@ public class Guga extends GameObjects implements KeyboardHandler {
 
     private int humor;
     private Picture guga;
+
     private double posX;
     private double posY;
     private double velX = 1;
     private double velY = 1;
-    private int previousKey;
+    private double mapHeight;
+    private double mapWidh;
+    private  boolean isOnAir = false;
 
-
-    public Guga(double x, double y){
+    public Guga(double x, double y) {
         super(false, ObjectType.GUGA);
         this.posX = x;
         this.posY = y;
         this.humor = 0;
-        this.guga = new Picture(posX , posY ,"Guga.png");
+        this.guga = new Picture(posX, posY - 108, "guga.png");
         guga.draw();
+
     }
 
     //Missing collision with other gameObjects, if its is implemented
     //Missing life deducting from collision with obstacles and CodeCadets
 
     public void gravity(Map map) {
-       if(!(guga.getY() >=  map.getHeight() - 150)){ //Again -150 represents pic adjustment to map
-            guga.translate(0, velY*100);        //Pls assign it int pictureAdjust = -100
-        }else{                                           //Starting to thing this should be static (no?)
-           posY = (int) (map.getHeight() - 150);
-       }
-       //To think this was all we needed
+        this.mapHeight = map.getHeight() - Map.Padding;
+        this.mapWidh = map.getWidth() - Map.Padding;
+        if (!(guga.getY() >= map.getHeight() - 150)) {
+            guga.translate(0, velY * 100);
+        } else {
+            posY = map.getHeight() - 150;
+            isOnAir = false;
+        }
+
     }
-    public void keyboardInit(){
+
+
+    public void keyboardInit() {
         Keyboard keyboard = new Keyboard(this);
 
         KeyboardEvent moveLeft = new KeyboardEvent();
@@ -61,56 +69,47 @@ public class Guga extends GameObjects implements KeyboardHandler {
     @Override
     public void keyPressed(KeyboardEvent keyboardEvent) {
 
-        switch(keyboardEvent.getKey()) {
+        switch (keyboardEvent.getKey()) {
             case KeyboardEvent.KEY_LEFT:
-
                 moveLeft();
                 break;
-
             case KeyboardEvent.KEY_RIGHT:
-
                 moveRight();
                 break;
-
             case KeyboardEvent.KEY_SPACE:
-
                 jump();
                 break;
-
             default:
         }
-
     }
 
-    public void moveLeft(){
-        guga.translate(-velX * 10, 0);
-        if (guga.getX() <= Map.Padding - 100) {
-            posX = Map.Padding - 100;
+    public void moveLeft() {
+        if (guga.getX() - 10 >= Map.Padding) {
+            guga.translate(-velX * 10, 0);
+
         }
-        previousKey = KeyboardEvent.KEY_LEFT;
     }
 
-    public void moveRight(){
-        guga.translate(velX * 10, 0);
-        if (guga.getX() >= guga.getWidth() - 100) {
-            posX = guga.getWidth() - 100;
+    public void moveRight() {
+        if (guga.getX() - 108 <= mapWidh - 120) {
+            guga.translate(velX * 10, 0);
+
         }
-        previousKey = KeyboardEvent.KEY_RIGHT;
     }
 
-    public void jump(){
-        if (guga.getY() != guga.getY() + 300) {         //Needs to be a gradual thing... where's my rope??
-            if (previousKey == KeyboardEvent.KEY_LEFT) {
-                guga.translate(-velX * 200, -velY * 300);
-            } else {
-                guga.translate(velX * 200, -velY * 300);
+    public void jump() {
+        if(!isOnAir) {
+            if(!(guga.getY() <= Map.Padding)) {
+                guga.translate(0, -velY * 300);
+                isOnAir = true;
             }
         }
-    }
 
+    }
 
     @Override
-    public void keyReleased(KeyboardEvent keyboardEvent) {
+    public void keyReleased(KeyboardEvent keyboardEvent) {}
 
-    }
+
+
 }

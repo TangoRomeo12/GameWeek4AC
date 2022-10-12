@@ -5,6 +5,9 @@ public abstract class GameObjects {
     protected boolean isVisible;
     protected ObjectType type;
 
+    protected double x;
+
+
     GameObjects(boolean isVisible, ObjectType type){
         this.isVisible = isVisible;
         this.type = type;
@@ -13,11 +16,11 @@ public abstract class GameObjects {
 
     //Every object will move
     //Maybe the method will be empty here and then ov in the subclasses
-    public void move(){
-        System.out.println("MAKE METHOD MOVE OV FOR SUBCLASSES Game.GameObjects.Game.GameObjects.CC OBST AND Game.GameObjects.Game.GameObjects.GG");
-    }
+    public void move(){}
 
     public void moveLeft(){};
 
-
+    public double getX() {
+        return x;
+    }
 }

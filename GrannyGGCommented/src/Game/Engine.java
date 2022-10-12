@@ -1,47 +1,50 @@
 package Game;
 
-import Game.Screens.Level1;
+import GameObjects.GameObjects;
 import GameObjects.Guga;
 import GameObjects.ObjectFactory;
 
-public class Engine {  //Should Engine be the one responsible for comparing positioning for collision?
-                        //Should engine have an arrayList of GameObjects, or should GameObjects?
+public class Engine{
 
+    private GameObjects[] gameObjects = new GameObjects[10];
     private int delay;
     private Map map;
     private ObjectFactory factory;
-
     private Guga guga;
-
 
     public Engine(int delay){
         this.delay = delay;
         this.map = new Map();
         this.factory = new ObjectFactory();
-        //map.getStartGame();
         map.getLevel1();
-        //map.getLevel2();
-        this.guga = factory.spawnGuga( Map.Padding -100, map.getHeight() -100); // -100 it's de adjustment for the picture ffs
-                                                                                        //kill me, or make int imageAdjust = -100
-
-    }
-
-    public void startGame(){
-        guga.keyboardInit();  //keyboard MUST be here for the love of God
-        while(true) {
-
-            //slows down game, so we see it happen, and not just the result
-            try {
-                Thread.sleep(delay);
-            } catch (InterruptedException ex) {       //Apparently we don't need to catch these exexions, but let it be for now
-                System.out.println(ex.getMessage());
-            } catch (IllegalArgumentException ex) {
-                System.out.println(ex.getMessage());
-            }
-            guga.gravity(map);
+        this.guga = factory.spawnGuga(Map.Padding, map.getHeight());
+        for(int i = 0; i < gameObjects.length;  i++){
+            gameObjects[i] = factory.spawnObjects(map.getWidth(), map.getHeight() - 60);
         }
-
-        //StartGame startGame = new StartGame();
-
     }
+
+
+    public void startGame() throws InterruptedException {
+        guga.keyboardInit();
+        while (true) {
+            Thread.sleep(delay);
+            guga.gravity(map);
+            gameObjects[0].move();
+            
+            for (int i = 1; i < gameObjects.length - 1;  i++){
+                gameObjects[i].move();
+                while(gameObjects[i].getX() >= Map.Padding) {
+
+                }
+                gameObjects[i + 1].move();
+
+//Not right, need to create space between them
+            }
+
+        }
+    }
+
+
+
+
 }
