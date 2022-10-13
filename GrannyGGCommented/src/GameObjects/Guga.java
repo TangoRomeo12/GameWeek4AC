@@ -12,20 +12,18 @@ public class Guga extends GameObjects implements KeyboardHandler {
     private int humor;
     private Picture guga;
 
-    private double posX;
-    private double posY;
+
     private double velX = 1;
     private double velY = 1;
-    private double mapHeight;
-    private double mapWidh;
+    private double mapHeight;  //The map should be the oneto know about this
+    private double mapWidh;        // same thing
     private  boolean isOnAir = false;
 
     public Guga(double x, double y) {
         super(false, ObjectType.GUGA);
-        this.posX = x;
-        this.posY = y;
+
         this.humor = 0;
-        this.guga = new Picture(posX, posY - 108, "guga.png");
+        this.guga = new Picture(x, y - 108, "guga.png");
         guga.draw();
 
     }
@@ -39,7 +37,6 @@ public class Guga extends GameObjects implements KeyboardHandler {
         if (!(guga.getY() >= map.getHeight() - 150)) {
             guga.translate(0, velY * 100);
         } else {
-            posY = map.getHeight() - 150;
             isOnAir = false;
         }
 
@@ -110,6 +107,11 @@ public class Guga extends GameObjects implements KeyboardHandler {
     @Override
     public void keyReleased(KeyboardEvent keyboardEvent) {}
 
+    public double getPosX() {
+        return guga.getX();
+    }
 
-
+    public int getPosY(){
+        return guga.getY();
+    }
 }
