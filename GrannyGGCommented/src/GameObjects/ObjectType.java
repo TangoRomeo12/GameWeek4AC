@@ -2,18 +2,15 @@ package GameObjects;
 
 public enum ObjectType {
 
-    GUGA(5 ),
-    CODECADET(2),
-    OBSTACLES(0),
-    JOKES(0);
+    GUGA,
+    CODECADET,
+    OBSTACLES,
+    JOKES;
 
 
-    private int MaxDamage;
 
-    ObjectType( int MaxDamage){
 
-        this.MaxDamage = MaxDamage;
-    }
+    ObjectType( ){}
 
 
     public static ObjectType type(int choice){

@@ -9,27 +9,24 @@ import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 public class Guga extends GameObjects implements KeyboardHandler {
 
-    private int humor;
     private Picture guga;
-
-
+    private int life;
     private double velX = 1;
     private double velY = 1;
     private double mapHeight;  //The map should be the oneto know about this
     private double mapWidh;        // same thing
     private  boolean isOnAir = false;
+    private int previousKey;
+
 
     public Guga(double x, double y) {
         super(false, ObjectType.GUGA);
-
-        this.humor = 0;
+        this.life = 5;
         this.guga = new Picture(x, y - 108, "guga.png");
-        guga.draw();
+        //guga.draw();
 
     }
 
-    //Missing collision with other gameObjects, if its is implemented
-    //Missing life deducting from collision with obstacles and CodeCadets
 
     public void gravity(Map map) {
         this.mapHeight = map.getHeight() - Map.Padding;
@@ -69,9 +66,11 @@ public class Guga extends GameObjects implements KeyboardHandler {
         switch (keyboardEvent.getKey()) {
             case KeyboardEvent.KEY_LEFT:
                 moveLeft();
+                previousKey = KeyboardEvent.KEY_LEFT;
                 break;
             case KeyboardEvent.KEY_RIGHT:
                 moveRight();
+                previousKey = KeyboardEvent.KEY_RIGHT;
                 break;
             case KeyboardEvent.KEY_SPACE:
                 jump();
@@ -82,23 +81,35 @@ public class Guga extends GameObjects implements KeyboardHandler {
 
     public void moveLeft() {
         if (guga.getX() - 10 >= Map.Padding) {
-            guga.translate(-velX * 10, 0);
+            guga.translate(-velX * 8, 0);
 
         }
     }
 
     public void moveRight() {
-        if (guga.getX() - 108 <= mapWidh - 120) {
-            guga.translate(velX * 10, 0);
+        if (guga.getX() - 10 <= mapWidh - 20) {
+            guga.translate(velX * 8, 0);
 
         }
     }
 
     public void jump() {
-        if(!isOnAir) {
-            if(!(guga.getY() <= Map.Padding)) {
-                guga.translate(0, -velY * 300);
-                isOnAir = true;
+        if (!isOnAir) {
+            if (!(guga.getY() <= Map.Padding)) {
+
+                if(previousKey == KeyboardEvent.KEY_LEFT) {
+                    if(guga.getX() - 10 >= -10) {
+                        guga.translate(-velX * 70, -velY * 300);
+                        isOnAir = true;
+                    }
+                }
+
+                if(previousKey == KeyboardEvent.KEY_RIGHT) {
+                    if(guga.getX() -10 <= mapWidh - 20) {
+                        guga.translate(velX * 70, -velY * 300);
+                        isOnAir = true;
+                    }
+                }
             }
         }
 
@@ -114,4 +125,27 @@ public class Guga extends GameObjects implements KeyboardHandler {
     public int getPosY(){
         return guga.getY();
     }
+
+    public int getLife(){
+        return this.life;
+    }
+    public double getWidth(){
+        return guga.getWidth();
+    }
+    public double getHight(){
+        return guga.getHeight();
+    }
+
+    public void setLife(int damage){
+        this.life = life - damage;
+    }
+
+    public void delete(){
+        guga.delete();
+    }
+
+    public void draw(){
+        guga.draw();
+    }
+
 }
